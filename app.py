@@ -7,6 +7,10 @@ import json
 from geopy.distance import distance as geopy_distance
 from datetime import datetime
 
+import requests
+from PIL import Image
+from transformers import BlipProcessor, BlipForConditionalGeneration
+
 # Initialize Firebase (config omitted for brevity)
 
 current_datetime = datetime.now()
@@ -141,7 +145,24 @@ class GetUserIssues(Resource):
         return {
             "issue_ids": issue_ids
         }
+class Description(Resource):
+    def post(self):
+        data = request.json
+        imageUrl=data.get('imageUrl')
+        
+        processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
+        model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
 
+        img_url = imageUrl
+        raw_image = Image.open(requests.get(img_url, stream=True).raw).convert('RGB')
+
+# conditional image captioning
+        text = "a photography of"
+        inputs = processor(raw_image, text, return_tensors="pt")
+
+        out = model.generate(**inputs)
+        result=processor.decode(out[0], skip_special_tokens=True)
+        print(result)
 
 class FilterLocationIssues(Resource):
     def calculate_distance(self, location1, location2):
@@ -171,7 +192,7 @@ api.add_resource(GetUserIssues, '/get_user_issues')
 api.add_resource(CreateIssue, '/create_issue')
 api.add_resource(Increment_report,'/increment_report')
 api.add_resource(Increment_support,'/increment_support')
-
+api.add_resource(Description,'/description')
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
