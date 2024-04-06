@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCiVo6rbY_R82-iHZz7hA9ikymA6iEHCP0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>513620828786</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.govHelpIndia.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>hackfest-c8599</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hackfest-c8599.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:513620828786:ios:a608c850088f6a486098eb</string>
+</dict>
+</plist>

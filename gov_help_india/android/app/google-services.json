@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513620828786",
+    "project_id": "hackfest-c8599",
+    "storage_bucket": "hackfest-c8599.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513620828786:android:04399b850fe37b486098eb",
+        "android_client_info": {
+          "package_name": "com.example.gov_help_india"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjPuCpiPf-7ItTgqQL5PAdxKDvXDLsqhQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
