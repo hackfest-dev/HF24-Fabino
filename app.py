@@ -5,8 +5,16 @@ import random
 import string
 import json
 from geopy.distance import distance as geopy_distance
+from datetime import datetime
 
 # Initialize Firebase (config omitted for brevity)
+
+current_datetime = datetime.now()
+
+# Format the date and time as required
+formatted_date = current_datetime.strftime("%d-%m-%Y")
+formatted_time = current_datetime.strftime("%H:%M")
+
 config = {
     "apiKey": "your-api-key",
     "authDomain": "hackfestsample.firebaseapp.com",
@@ -22,7 +30,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-app = Flask(_name_)
+app = Flask(__name__)
 api = Api(app)
 
 def generate_issue_id():
@@ -51,7 +59,9 @@ class CreateIssue(Resource):
             'listSupportedUser': ["hi"],
             'origin': user_id,
             'support_count': 0,
-            'report_count': 0
+            'report_count': 0,
+            'date': formatted_date,
+            'time': formatted_time
         }
 
         # Combine data and additional fields
@@ -80,6 +90,47 @@ class CreateIssue(Resource):
             return {'issue_id': issue_id, 'message': 'Issue created successfully'}, 201
         except Exception as e:
             return {'message': str(e)}, 500
+class Increment_support(Resource):       
+    # Endpoint to increment support count
+    def post(self):
+        # Extract user_id and issue_id from request body
+        # user_id = json.form.get('user_id')
+        data = request.json
+        issue_id = data.get('issue_id')
+        
+        # Fetch the data from the database
+        data = db.child("issue-table").child(issue_id).get().val()
+        
+        # Check if data exists and support_count key is present
+        if data and 'support_count' in data:
+            # Increment the support count by 1
+            new_support_count = data['support_count'] + 1
+            
+            # Update the support count in the database
+            db.child("issue-table").child(issue_id).update({"support_count": new_support_count})
+            
+            return {"message": "Support count incremented successfully."}, 200
+        else:
+            return {"message": "Data or support count not found."}, 404
+        
+class Increment_report(Resource):
+    def post(self):
+        data = request.json
+        issue_id = data.get('issue_id')
+        # Fetch the data from the database
+        data = db.child("issue-table").child(issue_id).get().val()
+        
+        # Check if data exists and report_count key is present
+        if data and 'report_count' in data:
+            # Increment the report count by 1
+            new_report_count = data['report_count'] + 1
+            
+            # Update the report count in the database
+            db.child("issue-table").child(issue_id).update({"report_count": new_report_count})
+            
+            print("Report count incremented successfully.")
+        else:
+            print("Data or report count not found.")
 
 class GetUserIssues(Resource):
     def post(self):
@@ -118,6 +169,9 @@ class FilterLocationIssues(Resource):
 api.add_resource(FilterLocationIssues, '/filter_issues')
 api.add_resource(GetUserIssues, '/get_user_issues')
 api.add_resource(CreateIssue, '/create_issue')
+api.add_resource(Increment_report,'/increment_report')
+api.add_resource(Increment_support,'/increment_support')
 
-if _name_ == '_main_':
+
+if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
