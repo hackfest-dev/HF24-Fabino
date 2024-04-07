@@ -65,7 +65,7 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final screens = [
     const HomePage(),
-    const HistoryPage(),
+    HistoryPage(),
     const ProfilePage()
   ];
 }

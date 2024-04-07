@@ -12,8 +12,10 @@ class ComplaintDetails extends StatelessWidget {
   const ComplaintDetails({super.key, required this.issue,});
   final Issue issue;
 
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -34,7 +36,7 @@ class ComplaintDetails extends StatelessWidget {
             const Expanded(
               child: SizedBox(),
             ),
-            const FooterButtons(),
+            FooterButtons(issueId: issue.id, supportCount: issue.supportCount,),
           ],
         ),
       ),

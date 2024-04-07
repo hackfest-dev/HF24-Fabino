@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gov_help_india/features/authentication/views/auth.dart';
+import 'package:gov_help_india/navigation_menu.dart';
 import 'package:gov_help_india/services/repository/auth_repo.dart';
 import 'common/loader/circular_loader.dart';
 import 'firebase_options.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
-      home: TCircularLoading()
+      home:NavigationMenu()
     );
   }
 }

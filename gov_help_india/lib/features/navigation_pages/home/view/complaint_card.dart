@@ -2,13 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../services/api/api_handler.dart';
 import '../../../complaint_details/view/complaint_details.dart';
+import '../controller/home_controller.dart';
 import '../modal/issue.dart';
 
 class ComplaintCard extends StatelessWidget {
   const ComplaintCard({super.key, required this.issue});
 
   final Issue issue;
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +38,19 @@ class ComplaintCard extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.arrow_circle_up_rounded))
+
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+
+                              await ApiHandler.addSupport(issue.id);
+                              HomeController.instance.getNearbyIssues();
+                              },
+                            icon: const Icon(Icons.arrow_circle_up_rounded)),
+                        Text(issue.supportCount.toString())
+                      ],
+                    )
                   ],
                 ),
               )

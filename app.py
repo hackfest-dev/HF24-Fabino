@@ -65,7 +65,8 @@ class CreateIssue(Resource):
             'support_count': 0,
             'report_count': 0,
             'date': formatted_date,
-            'time': formatted_time
+            'time': formatted_time,
+            'status': "Inactive"
         }
 
         # Combine data and additional fields
@@ -94,6 +95,7 @@ class CreateIssue(Resource):
             return {'issue_id': issue_id, 'message': 'Issue created successfully'}, 201
         except Exception as e:
             return {'message': str(e)}, 500
+        
 class Increment_support(Resource):       
     # Endpoint to increment support count
     def post(self):
@@ -145,24 +147,7 @@ class GetUserIssues(Resource):
         return {
             "issue_ids": issue_ids
         }
-class Description(Resource):
-    def post(self):
-        data = request.json
-        imageUrl=data.get('imageUrl')
-        
-        processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
-        model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
 
-        img_url = imageUrl
-        raw_image = Image.open(requests.get(img_url, stream=True).raw).convert('RGB')
-
-# conditional image captioning
-        text = "a photography of"
-        inputs = processor(raw_image, text, return_tensors="pt")
-
-        out = model.generate(**inputs)
-        result=processor.decode(out[0], skip_special_tokens=True)
-        print(result)
 
 class FilterLocationIssues(Resource):
     def calculate_distance(self, location1, location2):

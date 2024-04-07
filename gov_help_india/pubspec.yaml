@@ -39,6 +39,7 @@ dependencies:
   iconsax: ^0.0.8
   http:
   get_storage: ^2.1.1
+  percent_indicator: ^4.2.3
   google_fonts:
   get:
 

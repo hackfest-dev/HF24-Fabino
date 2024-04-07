@@ -131,4 +131,66 @@ class ApiHandler {
     }
     return null;
   }
+
+  static Future<Map?> addSupport(String issueId) async {
+
+    final String url = "$_BASE_URL/inc_support";
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          "issue_id": issueId
+        }), // Convert model to JSON
+      );
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        // THelperFunctions.showAlert('Response data:', response.body);=
+        return jsonDecode(response.body);
+
+      } else {
+        print('Failed to make POST request');
+        print('Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      THelperFunctions.showAlert('Error during POST request', e.toString());
+      print(e);
+    }
+    return null;
+  }
+
+  static Future<Map?> addReport(String issueId) async {
+
+    final String url = "$_BASE_URL//inc_report";
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          "issue_id": issueId
+        }), // Convert model to JSON
+      );
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        // THelperFunctions.showAlert('Response data:', response.body);=
+        return jsonDecode(response.body);
+
+      } else {
+        print('Failed to make POST request');
+        print('Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      THelperFunctions.showAlert('Error during POST request', e.toString());
+      print(e);
+    }
+    return null;
+  }
 }
